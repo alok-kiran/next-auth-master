@@ -1,20 +1,32 @@
 "use client";
-import { Button } from "@/components/ui/button"
+import { Poppins } from "next/font/google";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import LoginButton from "@/components/auth/login-button";
+
+const font = Poppins({
+  subsets: ["latin"],
+  weight: ["600"]
+})
 
 export default function Home() {
-  console.log("Home");
   return (
-    <div className="text-center">
-      <h1>Home</h1>
-      <p className=" font-semibold text-green-500">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-        voluptate, voluptatibus, doloremque, quae officiis voluptatum
-        exercitationem doloribus quod voluptatem facere quia. Quisquam
-        voluptatibus quibusdam, quae, quidem, voluptatem voluptate aperiam
-        molestiae quod voluptatum exercitationem doloribus quia. Quisquam
-        voluptatibus quibusdam, quae, quidem, voluptatem voluptate aperiam
-        molestiae quod voluptatum exercitationem doloribus quia.
-      </p>
-    </div>
+    <main className=" flex h-full flex-col items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400 to-blue-800">
+      <div className=" space-y-6 text-center">
+        <h1 className={cn("text-6xl font-semibold text-white drop-shadow-md", font.className)}>
+          <span role="img" aria-label="lock">🔐</span> Auth
+        </h1>
+        <p className=" text-white text-lg">
+          A simple authentication service.
+        </p>
+        <div>
+          <LoginButton>
+            <Button variant={"secondary"} size="lg">
+              Sign in
+            </Button>
+          </LoginButton>
+        </div>
+      </div>
+    </main>
   );
 }
