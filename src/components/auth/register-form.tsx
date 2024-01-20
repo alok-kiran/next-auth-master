@@ -39,7 +39,7 @@ const RegisterForm: React.FC = () => {
         startTransition(() => {
             register(values).then((res) => {
                 if (res.success) {
-                    setSuccess('Logged in successfully!');
+                    setSuccess(res.data.message);
                     form.reset();
                 }
             }).catch((err) => {
