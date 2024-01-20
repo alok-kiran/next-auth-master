@@ -38,12 +38,14 @@ const LoginForm: React.FC = () => {
         setSuccess('');
         startTransition(() => {
             login(values).then((res) => {
-                if (res.success) {
+                if (res?.error) {
+                    setError(res?.error);
+                } else {
                     setSuccess('Logged in successfully!');
                     form.reset();
                 }
             }).catch((err) => {
-                setError(err.message);
+                setError(err);
             });
         });
     };
