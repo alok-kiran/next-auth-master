@@ -13,17 +13,17 @@ import {
     FormMessage
 } from '@/components/ui/form';
 import { CardWrapper } from './card-wrapper';
-import { LoginSchema } from '../../../schemas';
+import { RegisterSchema } from '../../../schemas';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { FormError } from '../form-error';
 import { FormSuccess } from '../form-success';
-import { login } from '../../../actions/login';
+import { register } from '../../../actions/register';
 
 
-const LoginForm: React.FC = () => {
-    const form = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
+const RegisterForm: React.FC = () => {
+    const form = useForm<z.infer<typeof RegisterSchema>>({
+        resolver: zodResolver(RegisterSchema),
         defaultValues: {
             email: '',
             password: '',
@@ -33,11 +33,11 @@ const LoginForm: React.FC = () => {
     const [error, setError] = React.useState('');
     const [success, setSuccess] = React.useState('');
 
-    const handleSubmit = async (values: z.infer<typeof LoginSchema>) => {
+    const handleSubmit = async (values: z.infer<typeof RegisterSchema>) => {
         setError('');
         setSuccess('');
         startTransition(() => {
-            login(values).then((res) => {
+            register(values).then((res) => {
                 if (res.success) {
                     setSuccess('Logged in successfully!');
                     form.reset();
@@ -50,11 +50,10 @@ const LoginForm: React.FC = () => {
 
     return (
         <CardWrapper
-            headerLabel='Welcome back!'
-            backButtonLabel="don't have an account?"
-            backButtonHref='/register'
+            headerLabel='Create an account'
+            backButtonLabel="Already have an account?"
+            backButtonHref='/login'
             showSocial
-
         >
             <Form {...form}>
                 <form
@@ -62,6 +61,27 @@ const LoginForm: React.FC = () => {
                     className="space-y-6"
                 >
                     <div className=' space-y-4'>
+                        <FormField
+                            control={form.control}
+                            name={"name"}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel htmlFor="name" className=' text-black'>Name</FormLabel>
+                                    <FormControl
+                                        {...field}
+                                        id="name"
+                                    >
+                                        <Input
+                                            {...field}
+                                            placeholder='john doe'
+                                            type='text'
+                                            disabled={isPending}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <FormField
                             control={form.control}
                             name={"email"}
@@ -112,7 +132,7 @@ const LoginForm: React.FC = () => {
                         message={success}
                     />
                     <Button type='submit' className='w-full' disabled={isPending}>
-                        Login
+                        Register
                     </Button>
                 </form>
             </Form>
@@ -120,4 +140,4 @@ const LoginForm: React.FC = () => {
     );
 };
 
-export default LoginForm;
+export default RegisterForm;

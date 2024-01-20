@@ -21,7 +21,7 @@ export const BackButton = ({
             asChild
         >
             <Link href={href}>
-                {label}
+                <p className=" text-sm">{label}</p>
             </Link>
         </Button>
     );
