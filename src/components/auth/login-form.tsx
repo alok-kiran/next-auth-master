@@ -3,6 +3,7 @@ import React, { useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { useSearchParams } from 'next/navigation';
 
 import {
     Form,
@@ -22,6 +23,8 @@ import { login } from '../../../actions/login';
 
 
 const LoginForm: React.FC = () => {
+    const searchParams = useSearchParams();
+    const urlError = searchParams.get('error') === 'OAuthAccountNotLinked' ? 'You already have an account with this email. Please login with your email and password and link your social account in your profile.' : '';
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
         defaultValues: {
@@ -108,7 +111,7 @@ const LoginForm: React.FC = () => {
                         />
                     </div>
                     <FormError
-                        message={error}
+                        message={error || urlError}
                     />
                     <FormSuccess
                         message={success}
