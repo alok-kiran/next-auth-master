@@ -44,8 +44,8 @@ const LoginForm: React.FC = () => {
                 if (res?.error) {
                     setError(res?.error);
                 } else {
-                    setSuccess('Logged in successfully!');
                     form.reset();
+                    setSuccess('Logged in successfully!');
                 }
             }).catch((err) => {
                 setError(err);
